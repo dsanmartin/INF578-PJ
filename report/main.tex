@@ -113,7 +113,23 @@
     \end{table}
     
     En el trabajo desarrollado por la publicación guía del trabajo, se establece al atributo \emph{area}
-    como el \emph{target} o variable dependiente.
+    como el \emph{target} o variable dependiente.    
+
+    \subsubsection{Pre-procesamiento}
+
+      Para trabajar con el \emph{dataset} fue necesario hacer algunas transformaciones. A las variables
+      categóricas como el mes y día, se hizo la transformación numérica respectiva. Se realizó un breve 
+      análisis de los datos de donde notamos que existe mayor cantidad de incendios ``pequeños'', es por 
+      esto que se sugiere aplicar la transformación logarítmica $y=ln(x+1)$ para incluir un poco de 
+      simetría y además escalar los datos. El resultado puede apreciarse en la 
+      Figura~\ref{fig:target_transform}.
+
+      \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=\textwidth]{figures/target_transformation.png}
+        \caption{Transformación del \emph{target}.}
+        \label{fig:target_transform}
+      \end{figure}
             
     \section{Desarrollo}
     
@@ -463,6 +479,7 @@
       
         Las métricas utilizadas para el análisis de los modelos fueron los siguientes:
         
+        \iffalse
         % R2
         \subsubsection{Coeficiente de Determinación}
         
@@ -478,7 +495,7 @@
           \end{equation}
 
           donde $\bar{y} =  \frac{1}{N} \sum_{i=1}^{N} y_i$.
-          
+          \fi
           
         % MSE
         \subsubsection{Error Cuadrático Medio}
@@ -492,6 +509,8 @@
             \text{MSE}(y, \hat{y}) = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2.
           \end{equation}
 
+          Para comparar con los resultados expuestos en el artículo guía, se incluye también el
+          $RMSE$ que es la raíz cuadrada del $MSE$.
           
         % MAE
         \subsubsection{Error Medio Absoluto}
@@ -509,6 +528,7 @@
       % EXPERIMENTS    
       \subsection{Experimentos}
       
+        \iffalse
         Dada la variedad de modelos que se desean probar es que se proponen distintas combinaciones de 
         características y transformaciones de la variable dependiente. La principal justificación de este 
         pre-procesamiento tiene relación a la baja cantidad de datos que existen en el \emph{dataset} de 
@@ -543,41 +563,86 @@
         Para ajustar los hiper-parámetros de cada modelo se utilizó una búsqueda exhaustiva implementada como 
         \emph{Grid Search} con \emph{Cross-Validation}. Además, se incluyen las combinaciones de características 
         y \emph{targets}. Entre cada familia de modelos se escogió el de mejor valor de $R^2$.
+        \fi
+
+        Para el desarrollo de este trabajo se dividió el \emph{dataset} en un conjunto de entrenamiento y prueba, en 
+        la proporción $80\%$ y $20\%$ respectivamente. En el ajuste de los hiper-parámetros de cada modelo se utilizó 
+        una búsqueda exhaustiva implementada como \emph{Grid Search} con \emph{Cross-Validation} con $K=5$. Entre cada familia 
+        de modelos se escogió el de menor valor de $MSE$ resultante del \emph{Cross-Validation} sobre el conjunto de
+        entrenamiento. Una vez seleccionado el modelo, se aplicaron las métricas sobre el conjunto de prueba.
           
         
       % RESULTS
       \subsection{Resultados}
       
-          TODO
-          % \begin{table}[!ht]
-          %     \centering
-          %     \caption{Mejores resultados para cada modelo}
-          %     \label{tab:results}
-          %     \begin{tabular}{l|rr}
-          %         \hline
-          %         Model    & MSE    & MAE    \\ \hline \hline
-          %         LR       & 0.041  & 0.167  \\
-          %         DT       & 0.002  & 0.013  \\
-          %         SVM      & 0.003  & 0.015  \\
-          %         MLP      & 0.042  & 0.172  \\
-          %         Bagging  & 0.043  & 0.172  \\
-          %         RF       & 0.002  & 0.016  \\ 
-          %         ET       & 0.003  & 0.013  \\
-          %         Adaboost & 0.041  & 0.171  \\
-          %         GBT      &        &        \\ \hline
-          %     \end{tabular}
-          % \end{table}
+        %TODO
+        % \begin{table}[!ht]
+        %     \centering
+        %     \caption{Mejores resultados para cada modelo}
+        %     \label{tab:results}
+        %     \begin{tabular}{l|rr}
+        %         \hline
+        %         Model    & MSE    & MAE    \\ \hline \hline
+        %         LR       & 0.041  & 0.167  \\
+        %         DT       & 0.002  & 0.013  \\
+        %         SVM      & 0.003  & 0.015  \\
+        %         MLP      & 0.042  & 0.172  \\
+        %         Bagging  & 0.043  & 0.172  \\
+        %         RF       & 0.002  & 0.016  \\ 
+        %         ET       & 0.003  & 0.013  \\
+        %         Adaboost & 0.041  & 0.171  \\
+        %         GBT      &        &        \\ \hline
+        %     \end{tabular}
+        % \end{table}
+
+        A continuación se presentan los resultados obtenidos luego de los experimentos.
+
+        \clearpage
+
+        \begin{table}[!ht]
+          \centering
+          \caption{Resultado de las méticas para cada modelo}
+          \label{tab:results}
+          \begin{tabular}{l|rrr}
+            \hline
+            Model    & MSE   & RMSE & MAE \\ \hline \hline
+            LR       & 12069.92 & 109.86 & 19.58 \\
+            DT       & 11575.84 & 107.59 & 15.02 \\
+            SVM      & 12135.25 & 110.16 & 19.67 \\
+            MLP      & 12079.37 & 109.91 & 19.66 \\
+            Bagging  & 8978.24  & 94.75  & 14.38 \\
+            RF       & 10293.97 & 101.46 & 15.25 \\ 
+            ET       & 11764.26 & 108.46 & 18.04 \\
+            Adaboost & 11957.46 & 109.35 & 19.65 \\
+            GBT      & 4255.87  & 65.24  & 8.13  \\ \hline
+          \end{tabular}
+        \end{table}        
+
+        De los resultados obtenidos podemos corroborar que son comparables a los expuestos en el 
+        artículo que se utilizó como base. Es importante mencionar que el resultado del
+        \emph{GBT} fue mejor que los resultados del artículos en términos del $MAE$.
   
     
     % CONCLUSIONS
     \section{Conclusiones}
         
-      TODO  
-      % Luego del desarrollo del proyecto notamos que una buena estrategia para evaluar correctamente los problemas con \emph{datasets} pequeños
-      % es usar \emph{Cross Validation}, de esta forma obtenemos métricas más representativas de los modelos.
-      % Si bien por limitaciones de tiempo y cómputo no se realizaron más combinaciones de hiper-parámetros, si se incluyeron variadas pruebas
-      % con distintas características, transformaciones y modelos, resultando como los mejores modelos para este problema: los arboles de decisión, 
-      % las máquinas de soporte vectorial, el \emph{Random Forest} y su variante \emph{Extremely Randomized Tree}.
+      Del desarrollo de este proyecto notamos la potencia de los modelos ensamblados, los cuales
+      mejoran los resultados considerablemente en comparación a los modelos no ensamblados. El principal
+      problema de estos modelos es que tienden a sobreajustar, pero gracias al uso de algunas herramientas
+      (según el modelo) se puede mitigar este problema. Si bien, la publicación guía sugiere el uso de 
+      ciertas configuraciones de $X$, que podría ser vistos como una selección de características, el 
+      modelo \emph{GBT} demostró mejorar los resultados utilizando toda la información. \medskip
+
+      Por limitaciones computacionales no se realizaron más pruebas, pero como trabajo futuro
+      se espera incluir técnicas de selección de características para así poder comparar resultados
+      en iguales condiciones al artículo guía. \medskip
+
+      El modelo \emph{GBT} nos entregó resultados bastante interesantes sobre los modelos que se utilizan 
+      el artículo. Según la literatura es uno de los modelos más potentes pero que lamentablemente tiene 
+      asociada una alta exigencia computacional dada la estructura iterativa del algoritmo. De todas 
+      formas gracias a las capacidades computacionales actuales este podría no ser un inconveniente, 
+      siempre que el problema no implique re-entrenar el modelo muchas veces o quizás el uso de 
+      entrenamiento en tiempo real.
 
 	% REFERENCES
   \bibliographystyle{apacite}
