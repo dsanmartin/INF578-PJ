@@ -323,7 +323,7 @@
             W^{i+1} = W^i - \epsilon \nabla {Loss}_{W}^{i}
           \end{equation}
               
-          donde $i$ es el paso de la iteración, y $\epsilon > 0$ es la taza de aprendizaje. El algoritmo 
+          donde $i$ es el paso de la iteración, y $\epsilon > 0$ es la tasa de aprendizaje. El algoritmo 
           se detiene una vez que alcanza el número máximo de iteraciones establecido o cuando se alcanza 
           una cierta tolerancia del error. \medskip
           
@@ -448,7 +448,7 @@
           El modelo inicial $F_{0}$ es específico del problema, por ejemplo para una regresión por mínimos 
           cuadrados, por lo general, se escoge la media de los valores de \emph{target}. \medskip
           
-          GBT intenta resolver el problema de minimización numéricamente por medio de gradiente descendente: 
+          GTB intenta resolver el problema de minimización numéricamente por medio de gradiente descendente: 
           La dirección corresponde al gradiente  negativo del la función de costo evaluada en el modelo actual 
           $F_{m-1}$ el cual puede ser calculado para cualquier función de costo diferenciable de la siguiente forma:
 
@@ -614,13 +614,13 @@
             RF       & 10293.97 & 101.46 & 15.25 \\ 
             ET       & 11764.26 & 108.46 & 18.04 \\
             Adaboost & 11957.46 & 109.35 & 19.65 \\
-            GBT      & 4255.87  & 65.24  & 8.13  \\ \hline
+            GTB      & 4255.87  & 65.24  & 8.13  \\ \hline
           \end{tabular}
         \end{table}        
 
         De los resultados obtenidos podemos corroborar que son comparables a los expuestos en el 
         artículo que se utilizó como base. Es importante mencionar que el resultado del
-        \emph{GBT} fue mejor que los resultados del artículos en términos del $MAE$.
+        \emph{GTB} fue mejor que los resultados del artículos en términos del $MAE$.
   
     
     % CONCLUSIONS
@@ -631,13 +631,13 @@
       problema de estos modelos es que tienden a sobreajustar, pero gracias al uso de algunas herramientas
       (según el modelo) se puede mitigar este problema. Si bien, la publicación guía sugiere el uso de 
       ciertas configuraciones de $X$, que podría ser vistos como una selección de características, el 
-      modelo \emph{GBT} demostró mejorar los resultados utilizando toda la información. \medskip
+      modelo \emph{GTB} demostró mejorar los resultados utilizando toda la información. \medskip
 
       Por limitaciones computacionales no se realizaron más pruebas, pero como trabajo futuro
       se espera incluir técnicas de selección de características para así poder comparar resultados
       en iguales condiciones al artículo guía. \medskip
 
-      El modelo \emph{GBT} nos entregó resultados bastante interesantes sobre los modelos que se utilizan 
+      El modelo \emph{GTB} nos entregó resultados bastante interesantes sobre los modelos que se utilizan 
       el artículo. Según la literatura es uno de los modelos más potentes pero que lamentablemente tiene 
       asociada una alta exigencia computacional dada la estructura iterativa del algoritmo. De todas 
       formas gracias a las capacidades computacionales actuales este podría no ser un inconveniente, 
